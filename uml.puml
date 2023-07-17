@@ -1,0 +1,94 @@
+@startuml
+class Client{
+serverAddress: Tuple<String,Integer>
+sock: Tuple<AddressFamily,SocketKind>
+name: String
+money: Integer
+games: Map<string,integer>
+unlockedModes: Array<String>
+achievements: Array<String>
+ID: Integer
+connect()
+sendMsg(msg:String)
+rcvMsg()
+askOption()
+handleStates(msg:String)
+saveGame()
+loadGame()
+closeConnection()
+}
+class Server{
+sock: Tuple<AddressFamily,SocketKind>
+port: Integer
+hostname: String
+STATE: Map<Integer,Enum>
+Game_State: Map<Integer,Enum>
+counter: Integer
+signatures: Map<Integer,String>
+startServer()
+acceptClient(sock)
+handleClient(conn:sock,playerID: Integer)
+startGame(state:Enum, playerID: Integer)
+handleCode(code:Integer)
+closeConnection(conn:sock,playerID:Integer)
+
+}
+class Interface{
+name: String
+setName(name:String)
+askUsername()
+displayPoly()
+welcomeMessage()
+displayLockedModes(unlockedModes:Array<String>)
+displayProgressOptions()
+displayModes(modes:Array<String>)
+displayOptions()
+selectOption(): Integer
+playerTurn():Array<Integer>
+displayWin()
+displayWaitingMsg()
+displayLost()
+}
+class Polynomials{
+yPoints: Array<Integer>
+xPoints: Array<Integer>
+poly: String
+evalPoly(coeff:Array<Integer>,x:Integer>):Integer
+createGrid()
+plotLine(x:Integer,y:Integer)
+acceptCoeff(coeff:Integer):Boolean
+sendPoly(coeff:Array<Integer)
+generatePoly(n:Integer):Array<Integer>
+linear()
+quadratic()
+cubic()
+}
+class Admin{
+name:String
+serverAddress:Tuple<String,Integer>
+sock: Tuple<AddressFamily,SocketKind>
+connect()
+sendMsg(msg:String)
+rcvMsg()
+getPlayerStats()
+banPlayer()
+}
+class States{
+    Connected: Integer
+    menu: Integer
+    StartGame: Integer
+    Playing: Integer
+    Disconnect: Integer
+    Connecting: Integer
+    WaitTurn: Integer
+    Lost: Integer
+    Admin: Integer
+}
+class Enum
+
+Enum <|-- States
+Client o-- Interface
+Client o-- Polynomials
+Client --> States
+Server --> States
+@enduml
